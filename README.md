@@ -15,8 +15,6 @@ GUI4VASP provides an end-to-end graphical interface for density-functional theor
   - Upload existing POSCAR/CONTCAR files
   - ASE preset materials (elements, binary compounds, common structures)
   - Materials Project database search (by formula or Material ID)
-  - C2DB 2D materials database (MoS2, WS2, h-BN, graphene, etc.)
-  - PubChem molecular structures (H2O, CO2, CH4, C6H6, etc.)
   - Custom builder with manual lattice vectors and atomic coordinates
 - **POTCAR** — Element selection from the full periodic table with automatic concatenation from a local pseudopotential library (PBE/LDA/GGA)
 - **KPOINTS** — Monkhorst-Pack or Gamma-centered k-mesh generation and line-mode band structure paths with labeled high-symmetry points
