@@ -1,6 +1,6 @@
 # GUI4VASP
 
-A web-based GUI tool for VASP (Vienna Ab initio Simulation Package) simulation workflows, built with [Streamlit](https://streamlit.io).
+A web-based GUI tool for VASP (Vienna Ab initio Simulation Package) simulation workflows, built using Python framework Streamlit.
 
 ## Overview
 
