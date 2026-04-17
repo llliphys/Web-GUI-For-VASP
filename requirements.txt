@@ -1,0 +1,25 @@
+# GUI4VASP dependencies
+# Install all: pip install -r requirements.txt
+
+# Core (required - app will not start without these)
+streamlit>=1.20.0
+numpy>=1.22.0
+plotly>=5.0.0
+
+# Materials science (required for full functionality)
+pymatgen>=2023.1.1
+ase>=3.22.0
+mp-api>=0.30.0
+
+# Data analysis
+pandas>=1.5.0
+
+# Visualization
+py3Dmol>=2.0.0
+matplotlib>=3.5.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Remote execution
+paramiko>=3.0.0

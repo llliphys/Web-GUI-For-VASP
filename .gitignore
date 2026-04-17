@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.manifest
+*.spec
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# dotenv / secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VASP output files (large / binary)
+WAVECAR
+CHGCAR
+CHG
+PROCAR
+DOSCAR
+EIGENVAL
+OUTCAR
+CONTCAR
+OSZICAR
+vasprun.xml
+*.out
+*.err

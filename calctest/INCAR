@@ -1,0 +1,81 @@
+# General Parameters
+ENCUT = 500
+PREC = Accurate
+
+# Restart from WAVECAR
+# ISTART = 1
+
+# Restart from CHGCAR
+# ICHARG = 11
+
+# For large-scale systems
+# LREAL = Auto
+# ADDGRID = .TRUE.
+
+# Whether to Preserve Lattice Symmetry
+ISYM = 2 # 0/2: Symmetry-OFF/ON
+
+# For vdW Correction
+IVDW = 1 # 1/11 or 12/13: D2/D3/D4
+
+# Switch on Spin-Orbit Coupling (SOC)
+# LSORBIT = .TRUE.
+
+# Structural Relaxation using CG Method
+NSW = 200
+ISIF = 2
+IBRION = 2
+EDIFFG = -1E-3
+POTIM = 0.01
+
+# Electronic Self-consistent Parameters
+ALGO = Normal
+NELM = 200
+ISMEAR = 0
+SIGMA = 0.05
+EDIFF = 1E-8
+NEDOS = 2000
+
+# Set Spin Polarization for Magnetic Systems
+# ISPIN = 2
+# MAGMOM = 2*1 2*0  # FM
+# MAGMOM = 1 -1 2*0 # AFM
+# NUPDOWN = 0  # Spin Multiplet
+
+# Set Non-Collinear Spin Magnetization (with SOC)
+# LNONCOLLINEAR = .TRUE.
+# SAXIS = 0 0 1
+# MAGMOM = 0 0 1 0 0 1 0 0 0 0 0 0
+
+# Electronic Correlation: DFT + U + J
+# LDAU = .TRUE.
+# LDAUTYPE = 2 # Isotropic U
+# LMAXMIX = 4  # For d electrons
+# LDAUL = 2 -1 # Angular Momenta
+# LDAUU = 3.9 0 # U
+# LDAUJ = 0.9 0 # J
+
+# Electronic SCF Mixing Parameters
+# AMIX = 0.2
+# BMIX = 0.0001
+# AMIX_MAG = 0.8 # For magnetic systems
+# BMIX_MAG = 0.0001 # For magnetic systems
+
+# Calculate Orbital-resolved DOS & BAND
+# LORBIT = 11
+
+# Whether to Write WAVECAR & CHGCAR
+LCHARG = .FALSE.
+LWAVE = .FALSE.
+
+# Parallelization Parameters
+NPAR = 8
+KPAR = 1
+
+# Whether to Write Total & Hartree Potentials
+# LVTOT = .TRUE.
+# LVHAR = .TRUE.
+
+# Calculate Optical Properties
+# LOPTICS = .TRUE.
+# CSHIFT = 0.05 # KK relation between Re(epsilon) and Im(epsilon)
