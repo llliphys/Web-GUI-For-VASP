@@ -5,9 +5,10 @@ Supports multiple generation methods:
   - Upload existing POSCAR
   - Preset materials from ASE database
   - Fetch from Materials Project API
-  - Fetch from C2DB (2D materials database)
-  - Fetch from PubChem (molecular structures)
   - Custom builder (manual lattice + positions)
+
+To do:
+  - Fetch from C2DB (2D materials database)
 
 Also contains the inline Py3Dmol structure viewer and lattice/color utilities.
 """
@@ -37,8 +38,7 @@ def render_poscar_tab() -> None:
 
     poscar_method = st.radio(
         "Choose generation method:",
-        ["Upload POSCAR", "Preset Materials", "Materials Project",
-         "C2DB Database", "PubChem Molecules", "Custom Builder"],
+        ["Upload POSCAR", "Preset Materials", "Materials Project", "Custom Builder"],
         horizontal=True,
     )
 
@@ -46,8 +46,7 @@ def render_poscar_tab() -> None:
         "Upload POSCAR":     _poscar_from_upload,
         "Preset Materials":  _poscar_from_ase,
         "Materials Project": _poscar_from_mp,
-        "C2DB Database":     _poscar_from_c2db,
-        "PubChem Molecules": _poscar_from_pubchem,
+        # "C2DB Database":     _poscar_from_c2db,
         "Custom Builder":    _poscar_custom,
     }
     handler = handlers.get(poscar_method)
@@ -430,100 +429,6 @@ def _build_2d_poscar(material: str, a: float, c: float) -> str:
     for pos in s["pos"]:
         lines.append(f"{pos[0]:.10f} {pos[1]:.10f} {pos[2]:.10f}")
     return "\n".join(lines) + "\n"
-
-
-# ===========================================================================
-# Method 5: PubChem (molecules)
-# ===========================================================================
-
-def _poscar_from_pubchem() -> None:
-    """Fetch a molecular structure from PubChem."""
-    st.markdown("###### Fetch from PubChem (Molecules)")
-    st.info("Get molecular structures from PubChem (https://pubchem.ncbi.nlm.nih.gov)")
-
-    pubchem_id = st.text_input("PubChem CID (e.g., 2244 for aspirin)", "2244")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.checkbox("Add PBE pseudopotentials info", value=True)
-    with col2:
-        vacuum = st.number_input("Vacuum (Å)", 10.0, step=1.0)
-
-    if st.button("Fetch from PubChem"):
-        with st.spinner("Fetching molecule..."):
-            _fetch_pubchem_molecule(pubchem_id, vacuum)
-
-    st.markdown("---")
-    st.markdown("##### Common Molecules Quick Access")
-    _render_common_molecules()
-
-
-def _fetch_pubchem_molecule(cid: str, vacuum: float) -> None:
-    """Download molecule info from PubChem and build a POSCAR."""
-    try:
-        import urllib.request
-        import json
-        from ase.build import molecule
-        from ase.io.vasp import write_vasp
-
-        url = (f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{cid}"
-               f"/property/IsomericSMILES,IUPACName/JSON")
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        response = urllib.request.urlopen(req, timeout=10)
-        data = json.loads(response.read().decode())
-
-        props = data["PropertyTable"]["Properties"][0]
-        smiles = props.get("IsomericSMILES", "")
-        name = props.get("IUPACName", "Unknown")
-        st.success(f"Found: {name}")
-        st.code(smiles, language="text")
-
-        try:
-            atoms = molecule(smiles)
-            cell_dim = atoms.get_cell()
-            a = cell_dim[0][0] if cell_dim[0][0] > 0 else vacuum
-            b = cell_dim[1][1] if cell_dim[1][1] > 0 else vacuum
-            c = cell_dim[2][2] if cell_dim[2][2] > 0 else vacuum
-            atoms.set_cell([a, 0, 0, 0, b, 0, 0, 0, c])
-            atoms.center()
-
-            buf = io.StringIO()
-            write_vasp(buf, atoms)
-            st.session_state.poscar_content = buf.getvalue()
-            st.success(f"Molecule loaded: {atoms.get_chemical_formula()}")
-        except Exception:
-            poscar_content = (
-                f"PubChem: {name} (CID: {cid})\n1.0\n"
-                f"{vacuum:.1f} 0.0 0.0\n0.0 {vacuum:.1f} 0.0\n0.0 0.0 {vacuum:.1f}\n"
-                f"# SMILES: {smiles}\n# Note: Please verify atomic positions manually\n"
-            )
-            st.session_state.poscar_content = poscar_content
-            st.info("Basic structure generated. Please verify atomic positions.")
-    except Exception as e:
-        st.error(f"Error: {str(e)}")
-
-
-def _render_common_molecules() -> None:
-    """Render quick-access selector for common molecules."""
-    common_molecules = st.selectbox("Select common molecule", [
-        "H2O", "CO2", "CH4", "C2H6", "C2H4", "C6H6", "NH3", "N2", "O2", "H2",
-    ])
-    if st.button("Load Molecule"):
-        try:
-            from ase.build import molecule
-            from ase.io.vasp import write_vasp
-
-            atoms = molecule(common_molecules)
-            vacuum = 10.0
-            atoms.set_cell([vacuum, 0, 0, 0, vacuum, 0, 0, 0, vacuum])
-            atoms.center()
-
-            buf = io.StringIO()
-            write_vasp(buf, atoms)
-            st.session_state.poscar_content = buf.getvalue()
-            st.success(f"Loaded {common_molecules}: {atoms.get_chemical_formula()}")
-        except Exception as e:
-            st.error(f"Error: {str(e)}")
-
 
 # ===========================================================================
 # Method 6: Custom builder

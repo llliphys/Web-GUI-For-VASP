@@ -9,7 +9,7 @@ import shutil
 
 import streamlit as st
 
-from styles import COMMON_STYLES
+from utils.styles import COMMON_STYLES
 
 
 # ===========================================================================
@@ -21,8 +21,9 @@ def render_my_projects() -> None:
     st.markdown(COMMON_STYLES, unsafe_allow_html=True)
 
     current_dir = st.session_state.current_folder
-    is_root = (current_dir == os.getcwd())
-
+    # is_root = (current_dir == os.getcwd())
+    is_root = (current_dir == st.session_state.my_projects_root)
+    
     # Handle pending folder navigation (set by other pages)
     if "navigate_to_folder" in st.session_state and st.session_state.navigate_to_folder:
         st.session_state.current_folder = st.session_state.navigate_to_folder
@@ -45,7 +46,12 @@ def render_my_projects() -> None:
                 st.markdown("<br>", unsafe_allow_html=True)
                 st.markdown("<br>", unsafe_allow_html=True)
                 if st.button("⬅️ Back", key="back_button"):
-                    st.session_state.current_folder = os.path.dirname(current_dir)
+                    # st.session_state.current_folder = os.path.dirname(current_dir)
+                    new_folder = os.path.dirname(current_dir)
+                    if new_folder == st.session_state.my_projects_root:
+                        st.session_state.current_folder = st.session_state.my_projects_root
+                    else:
+                        st.session_state.current_folder = new_folder    
                     st.session_state.pending_replace = None
 
     st.markdown("---")
@@ -59,9 +65,9 @@ def render_my_projects() -> None:
 
 def _render_project_controls(current_dir: str) -> None:
     """Render the new-folder input and replace-confirmation dialog."""
-    col_search, col_btn = st.columns([4, 1])
+    col_search, col_btn = st.columns([13, 1])
     with col_search:
-        project_name = st.text_input("Enter folder name...", key="new_project_name")
+        project_name = st.text_input("Enter folder name", key="new_project_name")
     with col_btn:
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("➕ New Folder"):
@@ -73,10 +79,12 @@ def _render_project_controls(current_dir: str) -> None:
         col_yes, col_no = st.columns(2)
         with col_yes:
             if st.button("Yes, Replace"):
+                folder_name = st.session_state.pending_replace
                 _replace_folder(current_dir, st.session_state.pending_replace)
+                st.success(f"Folder '{folder_name}' replaced successfully!")
         with col_no:
             if st.button("No, Keep Existing"):
-                st.info("Operation cancelled.")
+                # st.info("Operation cancelled.")
                 st.session_state.pending_replace = None
 
 
@@ -89,7 +97,7 @@ def _handle_new_folder(current_dir: str, project_name: str) -> None:
         st.session_state.pending_replace = project_name
     else:
         os.makedirs(new_folder_path, exist_ok=True)
-        st.success(f"Folder '{project_name}' created successfully!")
+        # st.success(f"Folder '{project_name}' created successfully!")
 
 
 def _replace_folder(current_dir: str, folder_name: str) -> None:
@@ -97,7 +105,7 @@ def _replace_folder(current_dir: str, folder_name: str) -> None:
     folder_to_replace = os.path.join(current_dir, folder_name)
     shutil.rmtree(folder_to_replace, ignore_errors=True)
     os.makedirs(folder_to_replace)
-    st.success(f"Folder '{folder_name}' replaced successfully!")
+    # st.success(f"Folder '{folder_name}' replaced successfully!")
     st.session_state.pending_replace = None
 
 
@@ -120,13 +128,31 @@ def _render_folder_list(current_dir: str) -> None:
         item_path = os.path.join(current_dir, item)
         is_dir = os.path.isdir(item_path)
 
+        # if is_dir:
+        #     if st.button(f"📁 {item}", key=f"folder_{idx}"):
+        #         st.session_state.current_folder = item_path
+        # else:
+        #     with st.expander(f"📄 {item}"):
+        #         render_file_preview(item_path)
+
         if is_dir:
-            if st.button(f"📁 {item}", key=f"folder_{idx}"):
-                st.session_state.current_folder = item_path
+            col_nav, col_del = st.columns([1, 5])
+            with col_nav:
+                if st.button(f"📁 {item}", key=f"folder_{idx}"):
+                    st.session_state.current_folder = item_path
+            with col_del:
+                if st.button("🗑️", key=f"delete_{idx}"):
+                    _delete_folder(item_path, item)
         else:
             with st.expander(f"📄 {item}"):
                 render_file_preview(item_path)
 
+
+def _delete_folder(folder_path: str, folder_name: str) -> None:
+    """Delete a folder."""
+    shutil.rmtree(folder_path, ignore_errors=True)
+    st.success(f"Folder '{folder_name}' deleted!")
+    st.rerun()
 
 # ===========================================================================
 # File preview (shared utility – also used by run_simulation page)

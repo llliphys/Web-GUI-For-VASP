@@ -14,7 +14,7 @@ import threading
 import streamlit as st
 from dotenv import load_dotenv
 
-from styles import COMMON_STYLES
+from utils.styles import COMMON_STYLES
 from sections.my_projects import render_file_preview
 
 # Load environment variables from .env file

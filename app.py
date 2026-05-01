@@ -52,8 +52,10 @@ def _init_session_state() -> None:
     defaults = {
         "current_page":     "Home",
         "pending_replace":  None,
-        "current_folder":   os.getcwd(),
-        "my_projects_root": os.getcwd(),
+        # "current_folder":   os.getcwd(),
+        # "my_projects_root": os.getcwd(),
+        "current_folder":   os.environ.get("GUI4VASP_PROJECTS_ROOT", os.getcwd()),
+        "my_projects_root": os.environ.get("GUI4VASP_PROJECTS_ROOT", os.getcwd()),
         "input_tab":        "INCAR",
         "show_save_dialog": False,
     }
@@ -115,21 +117,21 @@ def _render_sidebar() -> None:
             if st.button(label, key=f"nav_{page}"):
                 st.session_state.current_page = page
 
-        st.markdown("---")
-        # st.markdown("📋 About the App")
-        st.markdown("### About the App")
-        st.markdown("<br>", unsafe_allow_html=True)
-        # st.markdown("""This web GUI for VASP is developed by Dr. Longlong Li 
-        #             whose interesets include physical modelling, scientific computing, 
-        #             and machine learning, and research software.""")
-        st.markdown(f"""
-        <div style="font-size: {15}px; text-align: justify;"> 
-        This web GUI for VASP is developed by Dr. Longlong Li 
-        who is working on physical modelling, scientific computing, 
-        machine learning, workflow automation, and research software.
-        Welcome developers and users to share their contributions.
-        </div>
-        """, unsafe_allow_html=True)
+        # st.markdown("---")
+        # # st.markdown("📋 About the App")
+        # st.markdown("### About the App")
+        # st.markdown("<br>", unsafe_allow_html=True)
+        # # st.markdown("""This web GUI for VASP is developed by Dr. Longlong Li 
+        # #             whose interesets include physical modelling, scientific computing, 
+        # #             and machine learning, and research software.""")
+        # st.markdown(f"""
+        # <div style="font-size: {15}px; text-align: justify;"> 
+        # This web GUI for VASP is developed by Dr. Longlong Li 
+        # who is working on physical modelling, scientific computing, 
+        # machine learning, workflow automation, and research software.
+        # Welcome developers and users to share their contributions.
+        # </div>
+        # """, unsafe_allow_html=True)
 
         st.markdown("---")
 

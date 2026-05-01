@@ -12,7 +12,7 @@ import os
 
 import streamlit as st
 
-from styles import COMMON_STYLES
+from utils.styles import COMMON_STYLES
 
 
 # ===========================================================================

@@ -6,7 +6,7 @@ Displays a welcome message, feature list, quick-start guide, and tips.
 
 import streamlit as st
 
-from styles import COMMON_STYLES
+from utils.styles import COMMON_STYLES
 
 
 def render_home() -> None:
@@ -22,9 +22,9 @@ def render_home() -> None:
         </style>
         """, unsafe_allow_html=True)
 
-    st.markdown('<h1 class="main-header"> GUI4VASP </h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header"> WGUI4VASP </h1>', unsafe_allow_html=True)
     # st.markdown('<p class="sub-header">A web-based GUI tool for VASP simulation</p>', unsafe_allow_html=True)
-    st.markdown('<h6 class="sub-header">A web-based GUI tool for VASP simulation</h6>', unsafe_allow_html=True)
+    st.markdown('<h6 class="sub-header">A Web-based GUI tool for VASP simulation</h6>', unsafe_allow_html=True)
 
     st.markdown("---")
 
@@ -51,7 +51,7 @@ def _render_welcome_section() -> None:
     st.markdown("## Welcome! 👋")
     st.markdown(f"""
     <div style="font-size: {font_size}px; text-align: justify;"> 
-    Welcome to <b>GUI4VASP</b>, a practical web-based GUI tool designed for generating inputs for and visualizing outputs from the VASP software.
+    Welcome to <b>WGUI4VASP</b>, a practical Web-based GUI tool designed for generating inputs for and visualizing outputs from the VASP software.
     Whether you are a student or researcher, GUI4VASP provides an easy-to-use interface to facilitate your computational materials research using VASP.
     </div>
     """, unsafe_allow_html=True)
@@ -89,22 +89,22 @@ def _render_quickstart_section() -> None:
     st.markdown("### 📝 Quick Start") # Quick Start Guide 
     st.markdown(f"""
     <div style="font-size: {font_size}px; text-align: justify;"> 
-    Follow these simple steps to start using <b>GUI4VASP</b>:
+    Follow these simple steps to start using <b>WGUI4VASP</b>:
      </div>
     """, unsafe_allow_html=True)
    
     steps = [
         (
             "Navigate to any page from the sidebar menu",
-            "Select the visualization or analysis tool you need from the sidebar on the left.",
+            "Select the generation or analysis tool from the sidebar on the left.",
         ),
         (
             "Upload your VASP files (POSCAR, CONTCAR, etc.)",
-            "Use the file uploader to select and upload your VASP calculation output files.",
+            "Use the file browser to select and upload/download your VASP files.",
         ),
         (
             "Visualize and analyze your results",
-            "Explore interactive plots, adjust parameters, and export your findings.",
+            "Make real-time plots, adjust parameters, and analyze your findings.",
         ),
     ]
 

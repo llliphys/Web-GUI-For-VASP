@@ -1,10 +1,10 @@
-# GUI4VASP
+# WGUI4VASP
 
-A web-based GUI tool for VASP (Vienna Ab initio Simulation Package) simulation workflows, built using Python framework Streamlit.
+A Web-based GUI (WGUI) tool for VASP (Vienna Ab initio Simulation Package) simulation workflows, built using Python framework Streamlit.
 
 ## Overview
 
-GUI4VASP provides an end-to-end graphical interface for density-functional theory (DFT) simulation workflows using VASP. It runs in your web browser and covers the full simulation pipeline: generating input files, managing project directories, executing simulations locally or on remote HPC clusters, and visualizing output data including crystal structures, electronic band structures, density of states, and phonon properties.
+WGUI4VASP provides an reproducible and user-friendly interface for performing density-functional theory (DFT) simulations using VASP. It simply runs in your web browser and covers the full simulation pipeline: managing project directories, generating input files, executing simulations locally or on remote HPC clusters, and visualizing output data including crystal structures, electronic band structures, density of states, and many more.
 
 ## Features
 
@@ -44,38 +44,51 @@ GUI4VASP provides an end-to-end graphical interface for density-functional theor
 - **Total DOS** — Spin-resolved density of states with configurable energy range
 - **Projected DOS (PDOS)** — Element- and orbital-resolved (s, p, d, f) partial density of states
 - **Projected Band Structure (Fat Bands)** — Orbital-weighted band structure with marker size proportional to projection weight
-- Dual plotting backends: Matplotlib (static, publication-quality) and Plotly (interactive)
+- Dual plotting backends: Matplotlib (static) and Plotly (interactive), with the latter being under development
 
 ### Phonon Properties Plotting
 
 - Phonon dispersion and phonon DOS visualization from pre-processed data files
-- Interactive Plotly plots with configurable axes
+- Interactive Plotly plots with configurable axes (being under development)
 
 ## Installation
 
 ### Prerequisites
 
 - Python 3.8 or higher
-- A working VASP installation (for running simulations)
+- A working VASP engin installation (for running simulations)
 
 ### Setup
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/GUI4VASP.git
-   cd GUI4VASP
+   git clone https://github.com/llliphys/WGUI4VASP.git
+   cd WGUI4VASP
    ```
 
-2. Install dependencies:
+2. Create environment (recommended)
+
+```
+python -m venv venv
+source venv/bin/activate  
+```
+
+3. Install dependencies (optional):
 
    ```bash
    pip install -r requirements.txt
    ```
 
+4. Install the package:
+
+   ```bash
+   pip install .
+   ```
+
 ### Dependency Notes
 
-All dependencies are listed in `requirements.txt`. The core application requires `streamlit`, `numpy`, and `plotly`. Other packages enable specific features:
+All dependencies are listed in `requirements.txt`. The core application requires `streamlit`, `numpy`, and `matplotlib`. Other packages enable specific features:
 
 | Package | Feature |
 |---------|---------|
@@ -87,14 +100,12 @@ All dependencies are listed in `requirements.txt`. The core application requires
 | `pandas` | Tabular display of Materials Project search results |
 | `paramiko` | SSH/SFTP connectivity for remote Slurm job submission |
 
-The application degrades gracefully when optional packages are missing — unavailable features display an installation prompt instead of crashing.
-
 ## Usage
 
 ### Quick Start
 
 ```bash
-streamlit run app.py
+wgui4vasp
 ```
 
 The application opens in your default web browser. Use the sidebar to navigate between pages.
