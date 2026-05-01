@@ -1,10 +1,18 @@
 # WGUI4VASP
 
+<<<<<<< HEAD
 A Web-based GUI (WGUI) tool for VASP (Vienna Ab initio Simulation Package) simulation workflows, built using Python framework Streamlit.
 
 ## Overview
 
 WGUI4VASP provides an reproducible and user-friendly interface for performing density-functional theory (DFT) simulations using VASP. It simply runs in your web browser and covers the full simulation pipeline: managing project directories, generating input files, executing simulations locally or on remote HPC clusters, and visualizing output data including crystal structures, electronic band structures, density of states, and many more.
+=======
+A web-based GUI (WGUI) tool for VASP (Vienna Ab initio Simulation Package) simulation workflows, built using Python framework Streamlit.
+
+## Overview
+
+WGUI4VASP provides an end-to-end graphical interface for density-functional theory (DFT) simulation workflows using VASP. It runs in your web browser and covers the full simulation pipeline: generating input files, managing project directories, executing simulations locally or on remote HPC clusters, and visualizing output data including crystal structures, electronic band structures, density of states, and phonon properties.
+>>>>>>> 4121ae3c6431947eacc867894d01a04c5f8fcb5c
 
 ## Features
 
