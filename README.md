@@ -166,7 +166,7 @@ GUI4VASP/
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+## Domain Links
 
 - [VASP](https://www.vasp.at/) — Vienna Ab initio Simulation Package
 - [Streamlit](https://streamlit.io/) — Web application framework
