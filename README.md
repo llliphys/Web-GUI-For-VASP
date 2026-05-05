@@ -4,7 +4,7 @@ A Web-based GUI (WGUI) tool for VASP (Vienna Ab initio Simulation Package) simul
 
 ## Overview
 
-WGUI4VASP provides an reproducible and user-friendly interface for performing density-functional theory (DFT) simulations using VASP. It simply runs in your web browser and covers the full simulation pipeline: managing project directories, generating input files, executing simulations locally or on remote HPC clusters, and visualizing output data including crystal structures, electronic band structures, density of states, and many more.
+WGUI4VASP provides an reproducible and user-friendly interface for performing and analyzing density-functional theory (DFT) simulations using VASP. It simply runs in your web browser and covers the full simulation pipeline, integrating the following components: (1) managing project directories, (2) generating input files, (3) executing simulations locally or on remote HPC clusters, and (4) visualizing output data including crystal structures, electronic band structures, density of states, etc.
 
 ## Features
 
@@ -70,8 +70,8 @@ WGUI4VASP provides an reproducible and user-friendly interface for performing de
 2. Create environment (recommended)
 
 ```
-python -m venv venv
-source venv/bin/activate  
+python3 -m venv .venv
+source .venv/bin/activate  
 ```
 
 3. Install dependencies (optional):
